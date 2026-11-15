@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#24162f">
+  <title>Shop Em Linh | Play Together</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-mark">☠</span><span>EM LINH <small>PLAY TOGETHER SHOP</small></span></a>
+  <nav><a href="#dich-vu">Dịch vụ</a><a href="#dat-hang">Đặt hàng</a><a href="#thanh-toan">Thanh toán</a></nav>
+  <a class="btn btn-small" id="zaloTop" href="#" target="_blank" rel="noopener">Zalo ↗</a>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">✦ SHOP PLAY TOGETHER ✦</span>
+      <h1>Thế giới nhỏ<br><em>của Em Linh</em></h1>
+      <p>Dịch vụ Play Together với quy trình đặt hàng rõ ràng, hỗ trợ tận tình và cập nhật trạng thái đơn hàng.</p>
+      <div class="hero-actions"><a class="btn" href="#dich-vu">Khám phá dịch vụ</a><a class="btn btn-ghost" href="#dat-hang">Đặt hàng ngay</a></div>
+    </div>
+    <div class="hero-art" aria-label="Minh họa phong cách Kuromi">
+      <div class="moon">☾</div><div class="spark s1">✦</div><div class="spark s2">✧</div>
+      <div class="mascot"><div class="ears"><i></i><b></b></div><div class="face"><span class="eye left"></span><span class="eye right"></span><span class="nose"></span><span class="mouth"></span></div><div class="skull">☠</div></div>
+      <div class="art-caption">CUTE • PURPLE • PLAY</div>
+    </div>
+  </section>
+
+  <section class="section" id="dich-vu">
+    <div class="section-heading"><span class="eyebrow">SHOP CÓ GÌ?</span><h2>Dịch vụ nổi bật</h2><p>Chọn dịch vụ bạn cần để xem bảng giá và đặt hàng.</p></div>
+    <div class="service-grid">
+      <button class="service-card" data-service="Tim"><span>💗</span><b>Nạp Tim</b><small>Gói tim Play Together</small></button>
+      <button class="service-card" data-service="Sao"><span>⭐</span><b>Nạp Sao</b><small>Gói sao trong game</small></button>
+      <button class="service-card" data-service="Cá"><span>🐟</span><b>Nạp Cá</b><small>Dịch vụ cá</small></button>
+      <button class="service-card" data-service="Card"><span>💳</span><b>Thẻ / Card</b><small>Các gói thanh toán</small></button>
+    </div>
+    <p class="notice">Bảng giá sẽ được shop cập nhật. Vui lòng hỏi shop để xác nhận giá trước khi thanh toán.</p>
+  </section>
+
+  <section class="section order-section" id="dat-hang">
+    <div class="section-heading"><span class="eyebrow">ĐẶT HÀNG ONLINE</span><h2>Tạo đơn hàng</h2><p>Điền thông tin bên dưới. Shop sẽ kiểm tra và xác nhận đơn.</p></div>
+    <form id="orderForm" class="order-form">
+      <label>Họ tên / Tên khách hàng<input name="customer_name" required maxlength="70" placeholder="Tên của bạn"></label>
+      <label>Zalo của bạn<input name="contact" required maxlength="100" placeholder="Số điện thoại hoặc link Zalo"></label>
+      <label>Dịch vụ<select name="service" id="serviceSelect" required><option value="">Chọn dịch vụ</option><option>Tim</option><option>Sao</option><option>Cá</option><option>Card</option></select></label>
+      <label>Gói muốn mua<input name="package" required maxlength="100" placeholder="Ví dụ: Gói 100k"></label>
+      <label>ID / Tên nhân vật trong game<input name="game_info" required maxlength="100" placeholder="Thông tin nhân vật"></label>
+      <label>Phương thức thanh toán<select name="payment_method" required><option value="">Chọn phương thức</option><option>Chuyển khoản ngân hàng</option><option>Thẻ cào</option><option>Ví điện tử</option><option>Phương thức khác (trao đổi với shop)</option></select></label>
+      <label class="wide">Ghi chú<textarea name="note" rows="3" maxlength="500" placeholder="Ghi chú thêm (nếu có)"></textarea></label>
+      <div class="wide form-foot"><p>Không gửi mật khẩu game hoặc mã OTP. Shop không cần những thông tin này để tiếp nhận đơn.</p><button class="btn" type="submit">Gửi đơn hàng ♡</button></div>
+      <div id="formMessage" class="wide form-message" role="status"></div>
+    </form>
+  </section>
+
+  <section class="section payment" id="thanh-toan">
+    <div class="section-heading"><span class="eyebrow">THANH TOÁN</span><h2>Nhiều phương thức</h2><p>Shop xác nhận thông tin và hướng dẫn thanh toán sau khi tiếp nhận đơn.</p></div>
+    <div class="payment-grid"><div>🏦 <b>Chuyển khoản</b><small>Thông tin nhận tiền do shop cung cấp khi xác nhận.</small></div><div>🎫 <b>Thẻ cào</b><small>Liên hệ shop để kiểm tra mệnh giá và hỗ trợ.</small></div><div>📱 <b>Ví điện tử</b><small>Trao đổi với shop về phương thức phù hợp.</small></div></div>
+  </section>
+</main>
+<footer><b>EM LINH SHOP</b><span>Website dịch vụ Play Together</span><a id="zaloFooter" href="#" target="_blank" rel="noopener">Liên hệ Zalo: 0865 572 912 ↗</a><small>© <span id="year"></span> Em Linh Shop. Vui lòng kiểm tra thông tin đơn trước khi thanh toán.</small></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script><script src="app.js"></script>
+</body></html>

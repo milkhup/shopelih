@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin | Em Linh Shop</title><link rel="stylesheet" href="style.css"><style>
+.admin-wrap{max-width:1050px;margin:55px auto;padding:0 20px}.admin-box{background:white;padding:25px;border-radius:18px;border:1px solid #eadcf2;margin:20px 0}.admin-box input{padding:12px;border:1px solid #ddd;border-radius:9px;margin:5px}.order{padding:15px 0;border-bottom:1px solid #eee;display:grid;grid-template-columns:1fr 170px;gap:12px}.order small{display:block;color:#786c82;line-height:1.8}.order select{padding:10px;border:1px solid #ddd;border-radius:8px}.danger{color:#a34a64}.hidden{display:none}@media(max-width:650px){.order{grid-template-columns:1fr}}
+</style></head><body><header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">☠</span><span>EM LINH <small>ADMIN PANEL</small></span></a><a class="btn btn-small" href="index.html">Về cửa hàng</a></header>
+<div class="admin-wrap"><span class="eyebrow">QUẢN TRỊ CỬA HÀNG</span><h1>Quản lý đơn hàng</h1><div class="admin-box" id="loginBox"><h3>Đăng nhập quản trị</h3><p>Dùng tài khoản admin đã tạo trong Supabase Authentication.</p><input id="email" type="email" placeholder="Email"><input id="password" type="password" placeholder="Mật khẩu"><button class="btn" id="loginBtn">Đăng nhập</button><p id="loginMsg" class="danger"></p></div>
+<div class="admin-box hidden" id="dashboard"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>Danh sách đơn</h3><button class="btn btn-small" id="logoutBtn">Đăng xuất</button></div><button class="btn btn-small" id="refreshBtn">Làm mới</button><div id="ordersList">Đang tải...</div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script>
+(() => {
+ const c=window.SHOP_CONFIG||{}, ok=c.SUPABASE_URL?.startsWith("https://")&&c.SUPABASE_ANON_KEY&&!c.SUPABASE_URL.includes("PASTE_");
+ const db=ok&&window.supabase?window.supabase.createClient(c.SUPABASE_URL,c.SUPABASE_ANON_KEY):null;
+ const $=id=>document.getElementById(id), statuses=["Mới","Đã xác nhận","Đang xử lý","Hoàn thành","Đã hủy"];
+ if(!db){$("loginMsg").textContent="Hãy cấu hình Supabase trong config.js."; $("loginBtn").disabled=true;return;}
+ async function showSession(){const {data}=await db.auth.getSession();const logged=!!data.session;$("loginBox").classList.toggle("hidden",logged);$("dashboard").classList.toggle("hidden",!logged);if(logged)load();}
+ async function load(){ $("ordersList").textContent="Đang tải...";const {data,error}=await db.from("orders").select("*").order("created_at",{ascending:false}).limit(100);if(error){$("ordersList").textContent="Không tải được đơn. Kiểm tra RLS và quyền admin.";return;}if(!data.length){$("ordersList").textContent="Chưa có đơn hàng.";return;}
+ $("ordersList").innerHTML=data.map(o=>`<article class="order"><div><b>${esc(o.order_code)} · ${esc(o.customer_name)}</b><small>${esc(o.service)} / ${esc(o.package_name)}<br>Liên hệ: ${esc(o.contact)}<br>Game: ${esc(o.game_info)}<br>Thanh toán: ${esc(o.payment_method)}<br>Ghi chú: ${esc(o.note||"Không có")}<br>${new Date(o.created_at).toLocaleString("vi-VN")}</small></div><div><select data-id="${esc(o.id)}">${statuses.map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}</select><small>Trạng thái đơn</small></div></article>`).join("");
+ document.querySelectorAll("#ordersList select").forEach(sel=>sel.addEventListener("change",async()=>{const {error}=await db.from("orders").update({status:sel.value}).eq("id",sel.dataset.id);if(error)alert("Không cập nhật được. Kiểm tra quyền admin.");}));
+ }
+ function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+ $("loginBtn").onclick=async()=>{const {error}=await db.auth.signInWithPassword({email:$("email").value,password:$("password").value});$("loginMsg").textContent=error?error.message:"";await showSession();};
+ $("logoutBtn").onclick=async()=>{await db.auth.signOut();showSession();};$("refreshBtn").onclick=load;showSession();
+})();
+</script></body></html>
